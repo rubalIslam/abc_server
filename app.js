@@ -11,12 +11,14 @@ import cors from "cors";
 //require('dotenv/config');
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
+dotenv.config()
+
 const app = express();
 //import authJwt from "./helpers/jwt.js";
 //const authJwt = require('./helpers/jwt');
 //import errorHandler from "./helpers/error-handler.js";
 //const errorHandler = require('./helpers/error-handler');
-dotenv.config();
+//dotenv.config();
 
 app.use(cors());
 app.options('*', cors())
