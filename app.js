@@ -1,6 +1,7 @@
 //const express = require('express');
+import path from "path";
 import express from "express";
-const app = express();
+import dotenv from "dotenv";
 import morgan from "morgan";
 //const morgan = require('morgan');
 import mongoose from 'mongoose'
@@ -8,10 +9,12 @@ import mongoose from 'mongoose'
 import cors from "cors";
 //const cors = require('cors');
 //require('dotenv/config');
-import dotenv from "dotenv";
-import authJwt from "./helpers/jwt.js";
+import { notFound, errorHandler } from './middleware/errorMiddleware.js'
+
+const app = express();
+//import authJwt from "./helpers/jwt.js";
 //const authJwt = require('./helpers/jwt');
-import errorHandler from "./helpers/error-handler.js";
+//import errorHandler from "./helpers/error-handler.js";
 //const errorHandler = require('./helpers/error-handler');
 dotenv.config();
 
@@ -21,9 +24,10 @@ app.options('*', cors())
 //middleware
 app.use(express.json());
 app.use(morgan('tiny'));
-app.use(authJwt());
+//app.use(authJwt());
 //app.use('/public/uploads', express.static(__dirname + '/public/uploads'));
-app.use(errorHandler);
+//app.use(errorHandler);
+
 
 //Routes
 //const categoriesRoutes = require('./routes/categories');
@@ -44,7 +48,8 @@ app.use(`${api}/users`,userRoutes);
 app.use(`${api}/orders`,orderRoutes);
 //app.use(`${api}/orders`, ordersRoutes);
 
-
+app.use(notFound)
+app.use(errorHandler)
 //Database
 mongoose.connect(process.env.CONNECTION_STRING, {
     useNewUrlParser: true,
